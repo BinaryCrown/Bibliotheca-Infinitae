@@ -17,17 +17,22 @@
 
     class Num {
         static Inf(i, n) {
-            return new Num(i, c);
+            return new Num(i, n);
         }
 
-        constructor(index, number) {
+        constructor(indexes, number) {
             if (!(number instanceof Number)) {
                 throw "Input to Hardy hierarchy invalid."
             }
             else {
-                this.index = Ord(index);
+                for (let i = 0; i < indexes.length; i++) {
+                    this.indexes.push(Ord(indexes[i]));
+                }
                 this.number = number;
             }
         }
+    }
+    Num.prototype.add = function (i, n) {
+    // H_n(m)*2 = H_w(H_n(m))
     }
 })(this);
