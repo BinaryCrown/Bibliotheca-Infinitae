@@ -32,7 +32,7 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
                 else {
                     narr = arr.split("ψ")
                     narr.shift()
-                    for (let i = 0 i < narr.length i++) {
+                    for (let i = 0; i < narr.length; i++) {
                         arr[i] = narr[i].split("(")
                     }
                     arr = narr.flat()
@@ -57,7 +57,15 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
             }
         }
     }
-
+    
+    function getIsz(i, l, r) {
+        s = (Number(i) == 0 && l == r == 0) || (Number(i) == 1 && Number(r) == 0)
+        if (s) {
+            return s
+        }
+        return getIsz((new Ordinal(i)).FS(new Num(r)), l, l)
+    }
+    
     class Num {
         constructor(expression) {
             switch (typeof expression) {
@@ -91,8 +99,7 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
                     inputs = expression.split("{")[1].split("}")[1].split("(")[1].split(")")[0]
                     leftinput = inputs.split(",")[0]
                     rightinput = inputs.split(",")[1]
-                    this.isz = (Number(index) == 0 && Number(leftinput) == 0 && Number(rightinput) == 0) || (Number(index) == 1 && Number(rightinput) == 0)
-                    // I'll handle the case when index is a limit ordinal later
+                    this.isz = getIsz(index, Number(leftinput), Number(rightinput))
                     this.e = new Ordinal(index)
                     this.n = new Num(leftinput)
                     this.m = new Num(rightinput)
@@ -105,13 +112,19 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
 
                     }
                     if (expression instanceof Num) {
-
+                        this.isz = expression.isz;
+                        this.e = expression.e;
+                        this.n = expression.n;
+                        this.m = expression.m;
                     }
                     if (expression instanceof Ordinal) {
-
+                        
                     }
                     if (expression instanceof Rational) {
-
+                        this.isz = expression.wholepart.isz;
+                        this.e = expression.wholepart.e;
+                        this.n = expression.wholepart.n;
+                        this.m = expression.wholepart.m;
                     }
                     else {
                         throw "Invalid constructor."
