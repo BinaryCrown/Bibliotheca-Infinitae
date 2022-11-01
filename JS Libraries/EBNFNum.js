@@ -15,10 +15,6 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
 
 (function (globalScope) {
     class Ordinal {
-        static Ord(e) {
-            return new Ordinal(e)
-        }
-      
         constructor(expression) {
             let arr = expression.split("+")
             if (arr.length == 1) {
@@ -93,6 +89,18 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
                             this.n = null
                             this.m = null
                         }
+                        if (expression == 2) {
+                            this.isz = false
+                            this.e = new Ordinal(0)
+                            this.n = new Num(1)
+                            this.m = new Num(1)
+                        }
+                        if (expression > 2) {
+                            this.isz = false
+                            this.e = new Ordinal(1)
+                            this.n = new Num(2)
+                            this.m = new Num(expression/2)
+                        }
                     }
                 case 'string':
                     index = expression.split("{")[1].split("}")[0]
@@ -104,21 +112,42 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
                     this.n = new Num(leftinput)
                     this.m = new Num(rightinput)
                 case 'bool':
-                    return new Num(+ bool)
+                    this.isz = new Num(+ bool).isz
+                    this.e = new Num(+ bool).e
+                    this.n = new Num(+ bool).n
+                    this.m = new Num(+ bool).m
                 case 'undefined':
-                    return new Num(0)
+                    this.isz = true
+                    this.e = null
+                    this.n = null
+                    this.m = null
                 case 'object':
                     if (expression.isArray()) {
-
+                        if (expression.length == 0) {
+                            this.isz = true
+                            this.e = null
+                            this.n = null
+                            this.m = null
+                        }
+                        if (expression.length == 1) {
+                            this.isz = new Num(expression[0]).isz
+                            this.e = new Num(expression[0]).e
+                            this.n = new Num(expression[0]).n
+                            this.m = new Num(expression[0]).m
+                        }
+                        if (expression.length == 2) {
+                            this.isz = new Num(expression[0]).isz && new Num(expression[1]).isz
+                            this.e = new Ordinal(0)
+                            this.n = new Num(expression[0])
+                            this.m = new Num(expression[1])
+                        }
+                        // Can't be bothered to add more cases
                     }
                     if (expression instanceof Num) {
                         this.isz = expression.isz;
                         this.e = expression.e;
                         this.n = expression.n;
                         this.m = expression.m;
-                    }
-                    if (expression instanceof Ordinal) {
-                        
                     }
                     if (expression instanceof Rational) {
                         this.isz = expression.wholepart.isz;
