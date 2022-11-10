@@ -78,6 +78,10 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
         static isLim(v) {
             // Returns whether the ordinal represented by v is a limit
         }
+
+        static pred(v) {
+            // Returns the predecessor of the ordinal represented by v
+        }
     }
     
     function getIsz(i, l, r) {
@@ -319,8 +323,7 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
             }
 
             if (Ordinal.__lt__(new Ordinal(0), this.e) && this.m != new Num(0) && !(Ordinal.isLim(this.e))) {
-                let temp = new Ordinal(undefined)
-                // Finish rest later
+                let pred = Ordinal.pred(this.e)
             }
 
         }
