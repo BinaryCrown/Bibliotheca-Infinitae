@@ -310,23 +310,45 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
             For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
             */
 
-            if (this.e == new Ordinal(0)) {
-                return Ordinal.toNumber(this.n) + Ordinal.toNumber(this.m)
+            if (v.e == new Ordinal(0)) {
+                return Ordinal.toNumber(v.n) + Ordinal.toNumber(v.m)
             }
 
-            if (this.e == new Ordinal(1) && this.m == new Num(0)) {
+            if (v.e == new Ordinal(1) && v.m == new Num(0)) {
                 return 0
             }
 
-            if (Ordinal.__lt__(new Ordinal(1), this.e) && this.m == new Num(0)) {
+            if (Ordinal.__lt__(new Ordinal(1), v.e) && v.m == new Num(0)) {
                 return 1
             }
 
-            if (Ordinal.__lt__(new Ordinal(0), this.e) && this.m != new Num(0) && !(Ordinal.isLim(this.e))) {
-                let pred = Ordinal.pred(this.e)
+            if (Ordinal.__lt__(new Ordinal(0), v.e) && v.m != new Num(0) && !(Ordinal.isLim(v.e))) {
+                let inp = new Num(undefined)
+                inp.isz = getIsz(v.e, v.n, v.m.sub(new Num(1)))
+                inp.e = v.e
+                inp.n = v.n
+                inp.m = v.m.sub(new Num(1))
+                let temp = new Num(undefined)
+                temp.isz = getIsz(Ordinal.pred(v.e), v.n, inp)
+                temp.e = Ordinal.pred(v.e)
+                temp.n = v.n
+                temp.m = inp
+                return Ordinal.toNumber(temp)
+            }
+
+            if (v.m != new Num(0) && Ordinal.isLim(v.e)) {
+                // Write later
             }
 
         }
+    }
+
+    Num.prototype.add = function (v) {
+
+    }
+
+    Num.prototype.sub = function (v) {
+
     }
 
     class Rational {
