@@ -75,6 +75,10 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
             // Returns alpha < beta where alpha is the ordinal represented by v and beta is the ordinal represented by w
         }
 
+        static __eq__(v,w) {
+            // Returns alpha = beta where alpha is the ordinal represented by v and beta is the ordinal represented by w
+        }
+
         static isLim(v) {
             // Returns whether the ordinal represented by v is a limit
         }
@@ -285,15 +289,14 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
                 temp.n = new Num(s)
                 temp.m = new Num(v)
             }
+            return temp
         }
 
         static toString(v) {
-            switch (v.isz) {
-                case true:
-                    return "0"
-                case false:
-                    return "A_{" + Ordinal.toString(this.e) + "}(" + Num.toString(this.n) + "," + Num.toString(this.m) + ")"
+            if (v.isz) {
+                return "0"
             }
+            return "A_{" + Ordinal.toString(this.e) + "}(" + Num.toString(this.n) + "," + Num.toString(this.m) + ")"
         }
 
         toString() {
@@ -352,11 +355,137 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
     }
 
     Num.prototype.add = function (v) {
-
+        v = new Num(v)
+        if (v.isz) {
+            return JSON.parse(JSON.stringify(this))
+        }
+        let temp = new Num(undefined)
+        temp.isz = this.isz && v.isz
+        temp.e = new Ordinal(0)
+        temp.n = JSON.parse(JSON.stringify(this))
+        temp.m = v
+        return temp
     }
 
     Num.prototype.sub = function (v) {
+        v = new Num(v)
+        if (v.isz) {
+            return JSON.parse(JSON.stringify(this))
+        }
+        if (this.le(v)) {
+            throw "Attempting to make a negative number (cringe, bad)"
+        }
+        if (v.e.type == 0) {
+            // a - (b + c) = (a - b) - c
+            return this.sub(v.n).sub(v.m)
+        }
+        // Else, substitution's the name of the game!
+        if (!(Ordinal.isLim(v.e))) {
+            // I'm bored, can't be bothered to implement the rest of this method rn
+        }
+    }
 
+    Num.prototype.mul = function (v) {
+
+    }
+
+    Num.prototype.div = function (v) {
+
+    }
+
+    Num.prototype.pow = function (v) {
+
+    }
+
+    Num.prototype.mod = function (v) {
+
+    }
+
+    Num.prototype.inv = function (v) {
+
+    }
+
+    // A bunch of comparison methods
+
+    Num.prototype.eq = function (v) {
+
+    }
+
+    Num.prototype.ex = function (v) {
+        
+    }
+
+    Num.prototype.gt = function (v) {
+        
+    }
+
+    Num.prototype.gte = function (v) {
+        
+    }
+
+    Num.prototype.lt = function (v) {
+        
+    }
+
+    Num.prototype.lte = function (v) {
+        
+    }
+
+    Num.prototype.bool = function () {
+        // Casts v to a boolean
+        return !(this.isz)
+    }
+
+    Num.prototype.IsInf = function () {
+
+    }
+
+    Num.prototype.IsZero = function () {
+        return this.isz;
+    }
+
+    Num.prototype.bas = function (v) {
+
+    }
+
+    Num.prototype.neg = function (v = Num.fromNum(0)) {
+
+    }
+
+    Num.prototype.doub = function () {
+        return this.mul(2);
+    }
+
+    Num.prototype.trip = function () {
+        return this.mul(3);
+    }
+
+    Num.prototype.half = function () {
+        return this.mul(1 / 2);
+    }
+
+    Num.prototype.third = function () {
+        return this.mul(1 / 3);
+    }
+
+    Num.prototype.sqr = function () {
+        return this.pow(2);
+    }
+
+    Num.prototype.cb = function () {
+        return this.pow(3);
+    }
+
+    Num.prototype.nroot = function (v) {
+        return this.pow(1 / v);
+    }
+
+    Num.prototype.sqrt = function () {
+        return this.nroot(2);
+    }
+
+    Num.prototype.cbrt = function () {
+        return this.nroot(3);
     }
 
     class Rational {
