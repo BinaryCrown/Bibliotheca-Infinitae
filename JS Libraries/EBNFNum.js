@@ -337,9 +337,17 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
             }
 
             if (v.m != new Num(0) && Ordinal.isLim(v.e)) {
-                // Write later
+                let temp = new Num(undefined)
+                temp.isz = getIsz(v.e.FS(v.m), v.n, v.n)
+                temp.e = v.e.FS(v.m)
+                temp.n = v.n
+                temp.m = v.n
+                return Num.toNumber(temp)
             }
+        }
 
+        toNumber() {
+            return Num.toNumber(this)
         }
     }
 
