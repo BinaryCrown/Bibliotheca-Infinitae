@@ -372,7 +372,7 @@ For limit p and m > 0, A_p(n,m) = A_p[m](n,n)
         if (v.isz) {
             return JSON.parse(JSON.stringify(this))
         }
-        if (this.le(v)) {
+        if (this.lt(v)) {
             throw "Attempting to make a negative number (cringe, bad)"
         }
         if (v.e.type == 0) {
